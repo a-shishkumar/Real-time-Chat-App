@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Buffer } from "buffer";
@@ -18,13 +18,16 @@ const SetAvatar = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
   // Toast configuration
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 5000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
+  const toastOptions = useMemo(
+    () => ({
+      position: "bottom-right",
+      autoClose: 5000,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "dark",
+    }),
+    []
+  );
 
   useEffect(() => {
     const user = localStorage.getItem("chat-app-user");
@@ -54,7 +57,7 @@ const SetAvatar = () => {
       }
     };
     fetchAvatars();
-  }, []);
+  }, [toastOptions]);
 
   // Handles setting the selected avatar as the user's profile picture
   const setProfilePicture = async () => {
